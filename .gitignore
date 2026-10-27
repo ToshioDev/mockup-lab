@@ -3,3 +3,5 @@
 .review.json.tmp
 ui-*.png
 check-*.png
+node_modules/
+hf-*.png
