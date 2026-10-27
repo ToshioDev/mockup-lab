@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Pulse — Today</title>
+<style>
+  @font-face{
+    font-family:"Roboto";
+    src:url("fonts/Roboto-Variable.woff2") format("woff2");
+    font-weight:100 900;
+    font-display:block;
+  }
+  @font-face{
+    font-family:"Material Symbols Outlined";
+    src:url("fonts/MaterialSymbolsOutlined.woff2") format("woff2");
+    font-weight:100 700;
+    font-display:block;
+  }
+  :root{
+    --surface:#F8FAF2;
+    --on-surface:#191D17;
+    --on-surface-variant:#424940;
+    --surface-container-low:#F2F4EC;
+    --surface-container:#ECEFE7;
+    --surface-variant:#DEE5D8;
+    --outline-variant:#C2C9BD;
+    --primary:#386A20;
+    --on-primary:#FFFFFF;
+    --primary-container:#B8F397;
+    --on-primary-container:#0B2000;
+    --secondary-container:#D9E7CB;
+    --on-secondary-container:#131F0D;
+  }
+  *{box-sizing:border-box}
+  html,body{width:100%;height:100%;margin:0}
+  body{
+    background:var(--surface);
+    color:var(--on-surface);
+    font-family:Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:14px;
+    line-height:20px;
+    letter-spacing:0;
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    padding-top:24px;
+  }
+  .ms{
+    font-family:"Material Symbols Outlined";
+    font-weight:400;
+    font-style:normal;
+    font-size:24px;
+    line-height:1;
+    letter-spacing:normal;
+    text-transform:none;
+    white-space:nowrap;
+    word-wrap:normal;
+    direction:ltr;
+    font-feature-settings:"liga";
+    -webkit-font-feature-settings:"liga";
+    font-variation-settings:"FILL" 0,"wght" 400,"GRAD" 0,"opsz" 24;
+    display:inline-block;
+  }
+  .ms.fill{font-variation-settings:"FILL" 1,"wght" 400,"GRAD" 0,"opsz" 24;}
+
+  .statusbar{
+    position:absolute;top:0;left:0;right:0;height:24px;z-index:5;
+    padding:0 16px 0 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    font-size:14px;line-height:20px;font-weight:500;letter-spacing:.2px;
+    color:var(--on-surface);
+  }
+  .statusbar .icons{display:flex;align-items:center;gap:5px}
+
+  .appbar{
+    height:128px;flex:0 0 auto;
+    padding:0 16px 16px;
+    display:flex;align-items:flex-end;justify-content:space-between;
+  }
+  .appbar h1{margin:0;font-size:32px;line-height:40px;font-weight:400;letter-spacing:0}
+  .appbar .sub{margin:0;font-size:14px;line-height:20px;font-weight:400;color:var(--on-surface-variant)}
+  .avatar{
+    width:40px;height:40px;border-radius:50%;flex:0 0 auto;
+    background:var(--secondary-container);color:var(--on-secondary-container);
+    display:grid;place-items:center;font-size:16px;line-height:24px;font-weight:500;
+  }
+
+  main{flex:1;min-height:0;padding:8px 16px 104px;display:flex;flex-direction:column}
+
+  .hero{flex:0 0 auto}
+  .hero-top{height:20px;display:flex;align-items:baseline;justify-content:space-between}
+  .hero-label{font-size:14px;line-height:20px;font-weight:500;color:var(--on-surface-variant)}
+  .hero-goal{font-size:14px;line-height:20px;font-weight:400;color:var(--on-surface-variant)}
+  .hero-metric{
+    margin-top:0;height:64px;
+    display:flex;align-items:baseline;gap:8px;
+    font-size:57px;line-height:64px;font-weight:400;letter-spacing:0;
+    font-variant-numeric:tabular-nums;
+  }
+  .progress{margin-top:16px;height:4px;border-radius:2px;background:var(--surface-variant);overflow:hidden}
+  .progress i{display:block;width:82%;height:100%;border-radius:2px;background:var(--primary)}
+  .hero-foot{
+    margin-top:12px;display:flex;align-items:baseline;justify-content:space-between;
+    font-size:14px;line-height:20px;color:var(--on-surface-variant);
+  }
+
+  .section-head{
+    height:24px;margin-top:16px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .section-head h2{margin:0;font-size:16px;line-height:24px;font-weight:500;letter-spacing:0}
+  .text-btn{
+    border:0;background:none;padding:0;height:24px;
+    display:inline-flex;align-items:center;
+    font-family:inherit;font-size:14px;line-height:20px;font-weight:500;letter-spacing:0;
+    color:var(--primary);
+  }
+
+  .list-card{
+    flex:0 0 auto;margin-top:8px;
+    border-radius:16px;background:var(--surface-container-low);overflow:hidden;
+  }
+  .list-row{height:64px;display:flex;align-items:center;gap:16px;padding:0 16px}
+  .list-row + .list-row{border-top:1px solid var(--outline-variant)}
+  .lead{
+    width:40px;height:40px;border-radius:50%;flex:0 0 auto;
+    display:grid;place-items:center;
+    background:var(--secondary-container);color:var(--on-secondary-container);
+  }
+  .lead .ms{font-size:22px}
+  .copy{flex:1;min-width:0}
+  .title{display:block;font-size:16px;line-height:24px;font-weight:500;letter-spacing:0}
+  .meta{display:block;font-size:14px;line-height:20px;font-weight:400;color:var(--on-surface-variant)}
+  .value{
+    flex:0 0 auto;font-size:16px;line-height:24px;font-weight:400;
+    font-variant-numeric:tabular-nums;
+  }
+
+  .action-card{
+    flex:0 0 auto;height:72px;margin-top:8px;padding:0 16px;
+    border-radius:16px;background:var(--surface-container-low);
+    display:flex;align-items:center;gap:16px;
+  }
+  .play{
+    width:40px;height:40px;border-radius:50%;flex:0 0 auto;
+    display:grid;place-items:center;
+    background:var(--primary-container);color:var(--on-primary-container);
+  }
+  .play .ms{font-size:22px}
+
+  .week-card{
+    flex:0 0 auto;margin-top:8px;padding:12px 16px;
+    border-radius:16px;background:var(--surface-container-low);
+  }
+  .week-head{height:20px;display:flex;align-items:center;justify-content:space-between}
+  .week-head h3{margin:0;font-size:14px;line-height:20px;font-weight:500;letter-spacing:0}
+  .week-head span{font-size:12px;line-height:16px;font-weight:500;letter-spacing:.2px;color:var(--on-surface-variant)}
+  .chart{display:flex;gap:8px;height:40px;margin-top:6px}
+  .col{flex:1;display:flex;align-items:flex-end;justify-content:center}
+  .bar{width:20px;border-radius:4px 4px 2px 2px;background:var(--surface-variant)}
+  .col.today .bar{background:var(--primary)}
+  .days{display:flex;gap:8px;height:16px;margin-top:4px}
+  .day{
+    flex:1;text-align:center;font-size:12px;line-height:16px;font-weight:500;
+    letter-spacing:.2px;color:var(--on-surface-variant);
+  }
+  .day.today{color:var(--on-surface)}
+
+  .insight{height:48px;margin-top:12px;display:flex;align-items:center;gap:12px}
+  .insight .lead{width:40px;height:40px}
+  .insight .ins-title{display:block;font-size:14px;line-height:20px;font-weight:500;letter-spacing:0}
+  .insight .ins-sub{display:block;font-size:12px;line-height:16px;color:var(--on-surface-variant)}
+  .insight .chev{font-size:20px;color:var(--on-surface-variant)}
+
+  .nav{
+    position:absolute;left:0;right:0;bottom:0;height:104px;z-index:6;
+    padding:0 8px 24px;background:var(--surface-container);
+    display:flex;align-items:center;
+  }
+  .dest{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+    color:var(--on-surface-variant);
+  }
+  .dest .ind{
+    width:64px;height:32px;border-radius:16px;
+    display:grid;place-items:center;background:transparent;
+  }
+  .dest.on .ind{background:var(--secondary-container);color:var(--on-secondary-container)}
+  .dest .lbl{font-size:12px;line-height:16px;font-weight:500;letter-spacing:.2px}
+  .dest.on .lbl{color:var(--on-surface)}
+</style>
+</head>
+<body>
+  <div class="statusbar">
+    <span>9:41</span>
+    <span class="icons">
+      <svg width="15" height="11" viewBox="0 0 15 11" fill="currentColor" aria-hidden="true"><path d="M7.5 10.4 1 3.2A9.2 9.2 0 0 1 14 3.2Z"/></svg>
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M1.4 4.2a9.8 9.8 0 0 1 13.2 0"/><path d="M3.8 6.8a6.4 6.4 0 0 1 8.4 0"/><circle cx="8" cy="10.2" r="1.1" fill="currentColor" stroke="none"/></svg>
+      <svg width="10" height="12" viewBox="0 0 10 12" fill="none" aria-hidden="true"><rect x="1" y="1" width="8" height="10" rx="2" stroke="currentColor" stroke-opacity=".45" stroke-width="1.2"/><rect x="2.6" y="6.2" width="4.8" height="3.2" rx="1" fill="currentColor"/></svg>
+    </span>
+  </div>
+
+  <header class="appbar">
+    <div>
+      <h1>Today</h1>
+      <p class="sub">Monday, October 26</p>
+    </div>
+    <div class="avatar">A</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-top">
+        <span class="hero-label">Steps</span>
+        <span class="hero-goal">Goal 10,000</span>
+      </div>
+      <div class="hero-metric">8,247</div>
+      <div class="progress"><i></i></div>
+      <div class="hero-foot">
+        <span>4.2 km today</span>
+        <span>82% of daily goal</span>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <h2>Activity</h2>
+    </div>
+    <section class="list-card">
+      <div class="list-row">
+        <span class="lead"><span class="ms">directions_walk</span></span>
+        <span class="copy">
+          <span class="title">Active</span>
+          <span class="meta">2,140 steps</span>
+        </span>
+        <span class="value">48 min</span>
+      </div>
+      <div class="list-row">
+        <span class="lead"><span class="ms">bedtime</span></span>
+        <span class="copy">
+          <span class="title">Sleep</span>
+          <span class="meta">11:40 pm – 6:52 am</span>
+        </span>
+        <span class="value">7h 12m</span>
+      </div>
+      <div class="list-row">
+        <span class="lead"><span class="ms">local_fire_department</span></span>
+        <span class="copy">
+          <span class="title">Calories</span>
+          <span class="meta">From walking</span>
+        </span>
+        <span class="value">412 kcal</span>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <h2>Next up</h2>
+      <button class="text-btn" type="button">See plan</button>
+    </div>
+    <section class="action-card">
+      <span class="lead"><span class="ms">self_improvement</span></span>
+      <span class="copy">
+        <span class="title">Mobility flow</span>
+        <span class="meta">18:30 · 20 min · Studio B</span>
+      </span>
+      <span class="play"><span class="ms fill">play_arrow</span></span>
+    </section>
+
+    <section class="week-card">
+      <div class="week-head">
+        <h3>Last 7 days</h3>
+        <span>Avg 7.1k</span>
+      </div>
+      <div class="chart">
+        <div class="col"><i class="bar" style="height:56%"></i></div>
+        <div class="col"><i class="bar" style="height:68%"></i></div>
+        <div class="col"><i class="bar" style="height:44%"></i></div>
+        <div class="col"><i class="bar" style="height:61%"></i></div>
+        <div class="col"><i class="bar" style="height:74%"></i></div>
+        <div class="col"><i class="bar" style="height:39%"></i></div>
+        <div class="col today"><i class="bar" style="height:82%"></i></div>
+      </div>
+      <div class="days">
+        <span class="day">T</span>
+        <span class="day">W</span>
+        <span class="day">T</span>
+        <span class="day">F</span>
+        <span class="day">S</span>
+        <span class="day">S</span>
+        <span class="day today">M</span>
+      </div>
+    </section>
+
+    <section class="insight">
+      <span class="lead"><span class="ms">monitoring</span></span>
+      <span class="copy">
+        <span class="ins-title">12% ahead of last week</span>
+        <span class="ins-sub">Evening walks are paying off.</span>
+      </span>
+      <span class="ms chev">chevron_right</span>
+    </section>
+  </main>
+
+  <nav class="nav">
+    <div class="dest on">
+      <span class="ind"><span class="ms fill">home</span></span>
+      <span class="lbl">Home</span>
+    </div>
+    <div class="dest">
+      <span class="ind"><span class="ms">monitoring</span></span>
+      <span class="lbl">Activity</span>
+    </div>
+    <div class="dest">
+      <span class="ind"><span class="ms">chat_bubble</span></span>
+      <span class="lbl">Coach</span>
+    </div>
+    <div class="dest">
+      <span class="ind"><span class="ms">person</span></span>
+      <span class="lbl">You</span>
+    </div>
+  </nav>
+</body>
+</html>

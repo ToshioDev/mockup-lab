@@ -1,0 +1,5 @@
+.DS_Store
+.review.json
+.review.json.tmp
+ui-*.png
+check-*.png
