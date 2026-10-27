@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "remotion studio",
+    "start": "node init && remotion studio",
     "render": "remotion render PhonePromo out/phone-promo.mp4",
     "still": "remotion still PhonePromo out/poster.png --frame=45"
   },
